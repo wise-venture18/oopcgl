@@ -30,7 +30,7 @@ int main() {
     op[1][2] = (x2 > X2) ? 1 : 0;
     op[1][3] = (x2 < X1) ? 1 : 0;
 
-    initgraph(&gd, &gm, "C:\\TURBOC3\\BGI");
+    initgraph(&gd, &gm, NULL);
 
     outtextxy(100, 100, "Before Clipping:");
     rectangle(X1, Y1, X2, Y2);
