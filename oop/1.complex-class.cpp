@@ -5,7 +5,6 @@
 // 2. Overload operator+ to add two complex numbers. 
 // 3. Overload operator* to multiply two complex numbers. 
 // 4. Overload operators << and >> to print and read Complex Numbers.
-
 #include <iostream>
 using namespace std;
 
@@ -53,12 +52,12 @@ public:
     }
 
     // Overload operator << to print a complex number
-    friend ostream& operator<<(ostream& output, Complex c) {
-        output << c.real;
+    friend ostream& operator<<(ostream& output, Complex& c) {
+       
         if (c.imag >= 0)
-            output << " + " << c.imag << "i";
+            output << c.real << " + " << c.imag << "i";
         else
-            output << " - " << -c.imag << "i";
+            output << c.real << " - " << -c.imag << "i";
         return output;
     }
 };
