@@ -5,7 +5,6 @@
 // constructor, default constructor, copy constructor, destructor, static member 
 // functions, friend class, this pointer, inline code and dynamic memory allocation 
 // operators-new and delete as well as exception handling.
-
 #include <iostream>
 #include <string>
 using namespace std;
@@ -108,7 +107,7 @@ public:
 };
 
 int main() {
-    Student student;  // Create a Student object directly
+    Student* student = new Student();  // Dynamically allocate memory for Student object
     Admin admin;  // Admin object to modify student data
     int choice;
     bool isStudentInitialized = false;
@@ -121,23 +120,23 @@ int main() {
 
         try {
             if (choice == 1) {
-                student.inputDetails();  // Input student details from user
+                student->inputDetails();  // Input student details from user
                 isStudentInitialized = true;
             }
             else if (choice == 2 && isStudentInitialized) {
-                student.display();  // Display student details
+                student->display();  // Display student details
             }
             else if (choice == 3 && isStudentInitialized) {
                 int rollNo;
                 cout << "Enter Roll No to modify: ";
                 cin >> rollNo;  // Get the roll number for modification
-                modifyStudent(student, rollNo);  // Modify student details based on roll number
+                modifyStudent(*student, rollNo);  // Modify student details based on roll number
             }
             else if (choice == 4 && isStudentInitialized) {
                 char newDiv;
                 cout << "Enter new division: ";
                 cin >> newDiv;
-                admin.updateDivision(student, newDiv);  // Update division using friend class
+                admin.updateDivision(*student, newDiv);  // Update division using friend class
             }
             else if (choice == 5) {
                 cout << "Exiting.\n";  // Exit the menu loop
@@ -152,10 +151,6 @@ int main() {
 
     } while (choice != 5);  // Repeat the menu until 'Exit' is selected
 
-    return 0;
-}
-
-    } while (choice != 5);  // Repeat the menu until 'Exit' is selected
-
+    delete student;  // Deallocate memory for the dynamically allocated student object
     return 0;
 }
