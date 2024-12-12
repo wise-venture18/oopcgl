@@ -104,9 +104,10 @@ public:
 };
 
 int main() {
-    Student *student = nullptr;  // Pointer to Student object
+    Student student;  // Create a Student object directly
     Admin admin;  // Admin object to modify student data
     int choice;
+    bool isStudentInitialized = false;
 
     do {
         cout << "\n--- Menu ---\n";
@@ -115,21 +116,20 @@ int main() {
         cin >> choice;
 
         if (choice == 1) {
-            if (student) delete student;  // Dynamically allocate memory for new student
-            student = new Student();  // Dynamic memory allocation (new operator)
-            student->inputDetails();  // Input student details from user
+            student.inputDetails();  // Input student details from user
+            isStudentInitialized = true;
         }
-        else if (choice == 2 && student) {
-            student->display();  // Display student details
+        else if (choice == 2 && isStudentInitialized) {
+            student.display();  // Display student details
         }
-        else if (choice == 3 && student) {
-            modifyStudent(*student);  // Modify student details using friend function
+        else if (choice == 3 && isStudentInitialized) {
+            modifyStudent(student);  // Modify student details using friend function
         }
-        else if (choice == 4 && student) {
+        else if (choice == 4 && isStudentInitialized) {
             char newDiv;
             cout << "Enter new division: ";
             cin >> newDiv;
-            admin.updateDivision(*student, newDiv);  // Update division using friend class
+            admin.updateDivision(student, newDiv);  // Update division using friend class
         }
         else if (choice == 5) {
             cout << "Exiting.\n";  // Exit the menu loop
@@ -140,6 +140,5 @@ int main() {
 
     } while (choice != 5);  // Repeat the menu until 'Exit' is selected
 
-    delete student;  // Deallocate memory
     return 0;
 }
