@@ -48,7 +48,7 @@ public:
     static int getCount() { return count; }
 
     // Friend function to modify student details
-    friend void modifyStudent(Student &s);
+    friend void modifyStudent(Student &s, int rollNo);
 
     // Friend class to access private members of Student
     friend class Admin;
@@ -88,10 +88,14 @@ public:
 
 int Student::count = 0; // Static member initialization
 
-// Friend function definition
-void modifyStudent(Student &s) {
-    cout << "Enter New Name and Roll: ";
-    cin >> s.name >> s.roll;  // Modify student's name and roll
+// Friend function definition to modify student based on roll number
+void modifyStudent(Student &s, int rollNo) {
+    if (s.roll == rollNo) {
+        cout << "Enter New Name and Roll: ";
+        cin >> s.name >> s.roll;  // Modify student's name and roll
+    } else {
+        cout << "No student found with roll number " << rollNo << ".\n";
+    }
 }
 
 // Friend class to demonstrate access to private members
@@ -115,28 +119,41 @@ int main() {
         cout << "Enter choice: ";
         cin >> choice;
 
-        if (choice == 1) {
-            student.inputDetails();  // Input student details from user
-            isStudentInitialized = true;
+        try {
+            if (choice == 1) {
+                student.inputDetails();  // Input student details from user
+                isStudentInitialized = true;
+            }
+            else if (choice == 2 && isStudentInitialized) {
+                student.display();  // Display student details
+            }
+            else if (choice == 3 && isStudentInitialized) {
+                int rollNo;
+                cout << "Enter Roll No to modify: ";
+                cin >> rollNo;  // Get the roll number for modification
+                modifyStudent(student, rollNo);  // Modify student details based on roll number
+            }
+            else if (choice == 4 && isStudentInitialized) {
+                char newDiv;
+                cout << "Enter new division: ";
+                cin >> newDiv;
+                admin.updateDivision(student, newDiv);  // Update division using friend class
+            }
+            else if (choice == 5) {
+                cout << "Exiting.\n";  // Exit the menu loop
+            }
+            else {
+                cout << "Invalid input or no student data.\n";  // Invalid input handling
+            }
+
+        } catch (const exception &e) {
+            cout << "An error occurred: " << e.what() << "\n";  // Exception handling for any runtime errors
         }
-        else if (choice == 2 && isStudentInitialized) {
-            student.display();  // Display student details
-        }
-        else if (choice == 3 && isStudentInitialized) {
-            modifyStudent(student);  // Modify student details using friend function
-        }
-        else if (choice == 4 && isStudentInitialized) {
-            char newDiv;
-            cout << "Enter new division: ";
-            cin >> newDiv;
-            admin.updateDivision(student, newDiv);  // Update division using friend class
-        }
-        else if (choice == 5) {
-            cout << "Exiting.\n";  // Exit the menu loop
-        }
-        else {
-            cout << "Invalid input or no student data.\n";  // Invalid input handling
-        }
+
+    } while (choice != 5);  // Repeat the menu until 'Exit' is selected
+
+    return 0;
+}
 
     } while (choice != 5);  // Repeat the menu until 'Exit' is selected
 
