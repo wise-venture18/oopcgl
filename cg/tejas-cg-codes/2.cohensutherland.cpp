@@ -1,5 +1,20 @@
 // 9. Write C++ program to implement Cohen Southerland line clipping algorithm. 
+//INPUTS 
+//200
+//200
+//400
+//400
 
+//190
+//190
+
+//410
+//410
+//: he co ordinates aahet 
+//X1,Y1 -> X2,Y2 // rectangle che
+//and then 
+//x1,y1 -> x2,y2 // line che
+    
 #include<iostream>
 #include<graphics.h>
 using namespace std;
